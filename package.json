@@ -1,0 +1,39 @@
+{
+  "name": "magemetrics-integration-demo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Demo project for MageMetrics AI integration - Fork this to test our product!",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource/roboto": "^5.1.0",
+    "@magemetrics/ai": "^0.0.52",
+    "@mantine/core": "^8.2.1",
+    "@mantine/hooks": "^8.2.1",
+    "@tailwindcss/vite": "^4.1.11",
+    "@tanstack/react-query": "^5.79.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.3.0",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^4.1.11",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.24.1",
+    "vite": "^7.0.6"
+  }
+}
