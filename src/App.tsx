@@ -9,9 +9,6 @@ function App() {
           <h1 className="text-2xl font-bold text-gray-900 mb-1">
             MageMetrics Integration Demo
           </h1>
-          <p className="text-gray-600 text-sm">
-            Professional demo for testing MageMetrics AI integration
-          </p>
         </div>
 
         <div className="flex-1 flex flex-col p-4 w-full overflow-hidden">

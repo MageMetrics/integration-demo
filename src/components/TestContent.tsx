@@ -9,6 +9,7 @@ import {
 } from "./FlowComponents";
 import { BuildYourOwnChatLayout } from "./ChatLayout";
 import { customComponents } from "./CustomDataComponents";
+import { DashboardDemo } from "./DashboardDemo";
 
 const API_URL = "https://api.magemetrics.com";
 
@@ -39,8 +40,14 @@ export const TestContent = () => {
     },
     {
       id: "analytics-trigger-demo",
-      label: "Trigger Demo",
+      label: "In-Context triggers",
       component: StartFlowDemo,
+      disabled: true,
+    },
+    {
+      id: "dashboard-demo",
+      label: "Dashboard & Analytics",
+      component: DashboardDemo,
     },
   ];
 
@@ -63,11 +70,12 @@ export const TestContent = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
+                disabled={tab.disabled}
                 className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
                   activeTab === tab.id
                     ? "bg-blue-100 text-blue-700 font-semibold"
                     : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"
-                }`}
+                } ${tab.disabled ? "cursor-not-allowed" : ""}`}
               >
                 {tab.label}
               </button>

@@ -7,15 +7,17 @@ A beautiful, production-ready demo showcasing the power of MageMetrics AI integr
 - **🚀 Flow Creator**: Start new AI conversations with natural language prompts
 - **📂 Existing Flows**: Browse and reopen previous conversations
 - **💬 Custom Chat**: Build your own chat interface with MageMetrics components
-- **⚡ Trigger Demo**: Programmatically start predefined analytics flows
-- **🎨 Beautiful UI**: Modern glassmorphism design with smooth animations
+- **⚡ In-Context Triggers**: Programmatically start predefined analytics flows
+- **📊 Dashboard & Analytics**: Display visualizations and reports from your MageMetrics dashboard
+- **🎨 Beautiful UI**: Modern design with Mantine components and Tailwind CSS
 - **🔑 JWT Authentication**: Secure integration with your existing auth system
+- **🔧 Custom Components**: Extensible component system for data visualization
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 22+
 - npm, yarn, or pnpm
 
 ### Installation
@@ -23,7 +25,7 @@ A beautiful, production-ready demo showcasing the power of MageMetrics AI integr
 1. **Clone or fork this repository**
 
    ```bash
-   git clone <your-repo-url>
+   git clone <your-repo-url> magemetrics-integration-demo
    cd magemetrics-integration-demo
    ```
 
@@ -63,20 +65,29 @@ The token will be saved in localStorage for convenience during development.
 ## 🏗️ Project Structure
 
 ```
-demo/
+magemetrics-ext-demo/
 ├── src/
+│   ├── components/
+│   │   ├── ChatLayout.tsx           # Custom chat interface components
+│   │   ├── CustomDataComponents.tsx # Custom data visualization components
+│   │   ├── DashboardDemo.tsx        # Visualization & report demos
+│   │   ├── FlowComponents.tsx       # Flow creation and management
+│   │   ├── JwtConfiguration.tsx     # JWT token management
+│   │   ├── TestContent.tsx          # Main demo content
+│   │   └── styles/
+│   │       └── ChatLayoutStyles.tsx # Chat styling components
+│   ├── config/                      # Configuration files
 │   ├── hooks/
-│   │   └── use-client.tsx     # Authentication context
-│   ├── App.tsx                # Main demo application
-│   ├── main.tsx              # React entry point
-│   ├── index.css             # Tailwind + custom styles
-│   └── vite-env.d.ts         # TypeScript environment types
-├── index.html                # HTML entry point
-├── package.json              # Dependencies & scripts
-├── vite.config.ts            # Vite configuration
-├── tailwind.config.js        # Tailwind CSS configuration
-├── tsconfig.json             # TypeScript configuration
-└── README.md                 # This file
+│   │   └── use-client.tsx           # Authentication context
+│   ├── App.tsx                      # Main application entry
+│   ├── main.tsx                     # React entry point
+│   └── index.css                    # Tailwind + custom styles
+├── index.html                       # HTML entry point
+├── package.json                     # Dependencies & scripts
+├── vite.config.ts                   # Vite configuration
+├── eslint.config.js                 # ESLint configuration
+├── tsconfig.json                    # TypeScript configuration
+└── README.md                        # This file
 ```
 
 ## 🎯 Usage Examples
@@ -111,6 +122,7 @@ import {
   ChatLayoutProvider,
   ChatMessages,
   ChatInput,
+  Chat,
 } from "@magemetrics/ai/react";
 
 <ChatLayoutProvider>
@@ -119,6 +131,24 @@ import {
     <ChatInput flowId={flowId} />
   </div>
 </ChatLayoutProvider>;
+```
+
+### Using Dashboard Components
+
+```tsx
+import { Visualization, DataReport, DomWrapper } from "@magemetrics/ai/react";
+
+// Display a visualization
+<Visualization
+  visualizationId={123}
+  isFullWidth={true}
+  withTitle={true}
+/>
+
+// Display a data report
+<DomWrapper>
+  <DataReport reportId={456} />
+</DomWrapper>
 ```
 
 ### Triggering Predefined Flows
@@ -142,16 +172,25 @@ startFlow({
 
 ### Custom Components
 
-The demo includes custom component examples:
+The demo includes custom component examples for data visualization:
 
 ```typescript
+import { Components, DataTable } from "@magemetrics/ai/react";
+
 const customComponents: Components = {
   dataTableCells: {
     empty: () => "N/A",
     renderTypes: {
       url: (props: unknown) => {
         if (typeof props !== "string") return null;
-        return <a href={props}>VIEW LINK</a>;
+        return (
+          <a
+            href={props}
+            className="text-blue-600 hover:text-blue-800 underline"
+          >
+            View Link
+          </a>
+        );
       },
     },
   },
@@ -161,33 +200,17 @@ const customComponents: Components = {
 };
 ```
 
-### Styling
+### Styling & UI Framework
 
-The demo uses Tailwind CSS with custom glassmorphism effects. Customize the look in:
+The demo uses a modern tech stack:
+
+- **Tailwind CSS 4.x** - Utility-first CSS framework
+- **Custom CSS** - Additional styling in `src/index.css`
+
+Customize the look in:
 
 - `src/index.css` - Main styles and custom CSS
-- `tailwind.config.js` - Tailwind configuration
-- Custom CSS classes for MageMetrics components
-
-## 📚 MageMetrics Documentation
-
-For complete documentation on MageMetrics AI components and APIs:
-
-- [Component Documentation](https://docs.magemetrics.com/components)
-- [API Reference](https://docs.magemetrics.com/api)
-- [Integration Guide](https://docs.magemetrics.com/integration)
-
-## 🤝 Support
-
-Need help with your integration?
-
-- 📧 Email: support@magemetrics.com
-- 💬 Discord: [Join our community](https://discord.gg/magemetrics)
-- 📖 Docs: [docs.magemetrics.com](https://docs.magemetrics.com)
-
-## 📜 License
-
-This demo is MIT licensed. Feel free to fork, modify, and use it in your own projects!
+- `src/components/styles/` - Component-specific styles
 
 ---
 

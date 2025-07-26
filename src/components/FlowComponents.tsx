@@ -27,12 +27,12 @@ export const RecentFlowsDisplay = ({
   });
 
   return (
-    <div className="flex flex-col h-full gap-4">
+    <div className="flex flex-col h-full gap-4 min-h-0 w-full">
       <div className="text-lg font-semibold text-gray-700 flex items-center gap-2 flex-shrink-0">
         Recent Flows
       </div>
 
-      <div className="flex-1 overflow-y-auto min-h-0">
+      <div className="flex-1 overflow-y-auto min-h-0 max-h-full">
         <div className="flex flex-col gap-3 pr-2">
           {data ? (
             data.map((item) => (
@@ -155,15 +155,15 @@ export const LegacyFlowTester = () => {
   const [isOpened, setIsOpened] = useState(false);
 
   return (
-    <div className="flex flex-1 flex-col space-y-6">
-      <div className="text-lg font-semibold text-gray-700 flex items-center gap-2">
+    <div className="flex flex-1 flex-col space-y-6 min-h-0">
+      <div className="text-lg font-semibold text-gray-700 flex items-center gap-2 flex-shrink-0">
         📂 Open Existing Flow
       </div>
-      <p className="text-gray-600 text-sm leading-relaxed">
+      <p className="text-gray-600 text-sm leading-relaxed flex-shrink-0">
         Open an existing conversation by ID or select from recent flows.
       </p>
 
-      <div className="flex flex-1 flex-col gap-6 content-center">
+      <div className="flex flex-1 min-h-0">
         <RecentFlowsDisplay
           onFlowClick={(flowId) => {
             setFlowId(flowId);

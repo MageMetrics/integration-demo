@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Button } from "@mantine/core";
 import { useClient } from "@hooks/use-client";
+import { logout } from "@magemetrics/ai/react";
 
 // =============================================================================
 // JWT CONFIGURATION COMPONENT
@@ -12,6 +12,7 @@ export const JwtConfiguration = () => {
 
   const handleSaveJwt = () => {
     if (jwtInput.trim()) {
+      logout();
       setExternalJwt(jwtInput.trim());
       localStorage.setItem("magemetrics_jwt", jwtInput.trim());
       setJwtInput("");
@@ -20,6 +21,7 @@ export const JwtConfiguration = () => {
 
   const clearJwt = () => {
     setExternalJwt("");
+    logout();
     localStorage.removeItem("magemetrics_jwt");
   };
 
@@ -72,9 +74,12 @@ export const JwtConfiguration = () => {
             <div className="inline-flex items-center gap-2 bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">
               ✓ Token Configured
             </div>
-            <Button onClick={clearJwt} variant="outline" size="sm">
+            <button
+              onClick={clearJwt}
+              className="px-3 py-1 text-sm border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-colors"
+            >
               Clear
-            </Button>
+            </button>
           </div>
           <div className="font-mono text-xs text-gray-600 bg-gray-100 p-2 rounded border">
             {user.session.access_token.substring(0, 30)}...
