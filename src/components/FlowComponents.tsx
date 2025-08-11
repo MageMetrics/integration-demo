@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import {
-  ApiService,
+  useRecentFlows,
   StandaloneConversationModal,
   useStartFlow,
 } from "@magemetrics/ai/react";
 
-const API_URL = "https://api.magemetrics.com";
 // =============================================================================
 // FLOWS-RELATED COMPONENTS
 // =============================================================================
@@ -16,15 +14,7 @@ export const RecentFlowsDisplay = ({
 }: {
   onFlowClick?: (flowId: string) => void;
 }) => {
-  const { data } = useQuery({
-    queryKey: ["recentFlows", { limit: 10 }],
-    queryFn: async () => {
-      const client = new ApiService(API_URL);
-      return client.getRecentFlows({
-        limit: 20,
-      });
-    },
-  });
+  const { data } = useRecentFlows(10);
 
   return (
     <div className="flex flex-col h-full gap-4 min-h-0 w-full">
@@ -97,13 +87,24 @@ export const NewApiFlowCreator = () => {
   const [flowId, setFlowId] = useState<string | null>(null);
   const [isOpened, setIsOpened] = useState(false);
 
+  const { startFlow } = useStartFlow({
+    onSuccess(data, variables, context) {
+      console.log("Flow started successfully", { data, variables, context });
+    },
+  });
+
   const handleStartFlow = async () => {
     if (!prompt) return;
 
     try {
-      const apiClient = new ApiService(API_URL);
-      const newFlowId = await apiClient.startFlow({ query: prompt });
-      setFlowId(newFlowId);
+      startFlow(
+        { query: prompt },
+        {
+          onSuccess(reportId) {
+            setFlowId(reportId);
+          },
+        }
+      );
       setIsOpened(true);
     } catch (error) {
       console.error("Failed to start flow", error);
