@@ -92,17 +92,6 @@ magemetrics-ext-demo/
 
 ## 🎯 Usage Examples
 
-### Starting a New Flow
-
-```typescript
-import { ApiService } from "@magemetrics/ai/react";
-
-const apiClient = new ApiService(API_URL);
-const flowId = await apiClient.startFlow({
-  query: "Show me sales data for Q4",
-});
-```
-
 ### Using the Standalone Modal
 
 ```tsx
@@ -154,15 +143,15 @@ import { Visualization, DataReport, DomWrapper } from "@magemetrics/ai/react";
 ### Triggering Predefined Flows
 
 ```typescript
-import { useStartFlow } from "@magemetrics/ai/react";
+import { useCreateFlow } from "@magemetrics/ai/react";
 
-const { startFlow } = useStartFlow({
-  onSuccess(data, variables, context) {
-    console.log("Flow started successfully", { data, variables, context });
+const { createFlow } = useCreateFlow({
+  onSuccess({ flowId }, variables, context) {
+    console.log("Flow started successfully", { flowId, variables, context });
   },
 });
 
-startFlow({
+createFlow({
   triggerId: "best-supplier",
   variables: { year: "2024" },
 });
