@@ -5,7 +5,7 @@ import { JwtConfiguration } from "./JwtConfiguration";
 import {
   NewApiFlowCreator,
   LegacyFlowTester,
-  StartFlowDemo,
+  CreateFlowDemo,
 } from "./FlowComponents";
 import { BuildYourOwnChatLayout } from "./ChatLayout";
 import { customComponents } from "./CustomDataComponents";
@@ -41,7 +41,7 @@ export const TestContent = () => {
     {
       id: "analytics-trigger-demo",
       label: "In-Context triggers",
-      component: StartFlowDemo,
+      component: CreateFlowDemo,
       disabled: true,
     },
     {

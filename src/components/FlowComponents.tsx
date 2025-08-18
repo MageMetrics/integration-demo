@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
   useRecentFlows,
   StandaloneConversationModal,
-  useStartFlow,
+  useCreateFlow,
 } from "@magemetrics/ai/react";
 
 // =============================================================================
@@ -50,8 +50,8 @@ export const RecentFlowsDisplay = ({
   );
 };
 
-export const StartFlowDemo = () => {
-  const { startFlow } = useStartFlow({
+export const CreateFlowDemo = () => {
+  const { createFlow } = useCreateFlow({
     onSuccess(data, variables, context) {
       console.log("Flow started successfully", { data, variables, context });
     },
@@ -67,7 +67,7 @@ export const StartFlowDemo = () => {
       </p>
       <button
         onClick={() => {
-          startFlow({
+          createFlow({
             triggerId: "best-supplier",
             variables: {
               year: "2024",
@@ -87,7 +87,7 @@ export const NewApiFlowCreator = () => {
   const [flowId, setFlowId] = useState<string | null>(null);
   const [isOpened, setIsOpened] = useState(false);
 
-  const { startFlow } = useStartFlow({
+  const { createFlow } = useCreateFlow({
     onSuccess(data, variables, context) {
       console.log("Flow started successfully", { data, variables, context });
     },
@@ -97,11 +97,11 @@ export const NewApiFlowCreator = () => {
     if (!prompt) return;
 
     try {
-      startFlow(
+      createFlow(
         { query: prompt },
         {
-          onSuccess(reportId) {
-            setFlowId(reportId);
+          onSuccess({ flowId }) {
+            setFlowId(flowId);
           },
         }
       );
