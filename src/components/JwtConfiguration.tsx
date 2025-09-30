@@ -5,7 +5,6 @@ import { logout } from "@magemetrics/ai/react";
 // =============================================================================
 // JWT CONFIGURATION COMPONENT
 // =============================================================================
-
 export const JwtConfiguration = () => {
   const { user, setExternalJwt } = useClient();
   const [jwtInput, setJwtInput] = useState("");
@@ -27,11 +26,24 @@ export const JwtConfiguration = () => {
 
   return (
     <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6 mb-6">
-      <div className="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
-        🔑 Authentication Setup
+      <div className="text-lg font-semibold text-gray-700 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">🔑 Authentication Setup</div>
+        {user.session && (
+          <div className="flex items-center gap-4">
+            <div className="inline-flex items-center gap-2 bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">
+              ✓ Token Configured
+            </div>
+            <button
+              onClick={clearJwt}
+              className="px-3 py-1 text-sm border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-colors"
+            >
+              Clear
+            </button>
+          </div>
+        )}
       </div>
 
-      {!user.session ? (
+      {!user.session && (
         <div className="space-y-6">
           <p className="text-gray-600 text-sm leading-relaxed">
             Provide your JWT token to authenticate with the MageMetrics API.
@@ -66,23 +78,6 @@ export const JwtConfiguration = () => {
               <li>Check localStorage or session storage for your auth token</li>
               <li>Copy the token and paste it above</li>
             </ol>
-          </div>
-        </div>
-      ) : (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between flex-wrap gap-4">
-            <div className="inline-flex items-center gap-2 bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">
-              ✓ Token Configured
-            </div>
-            <button
-              onClick={clearJwt}
-              className="px-3 py-1 text-sm border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-colors"
-            >
-              Clear
-            </button>
-          </div>
-          <div className="font-mono text-xs text-gray-600 bg-gray-100 p-2 rounded border">
-            {user.session.access_token.substring(0, 30)}...
           </div>
         </div>
       )}

@@ -107,17 +107,11 @@ import { StandaloneConversationModal } from "@magemetrics/ai/react";
 ### Building Custom Chat Layout
 
 ```tsx
-import {
-  ChatLayoutProvider,
-  ChatMessages,
-  ChatInput,
-  Chat,
-} from "@magemetrics/ai/react";
+import { ChatLayoutProvider, Chat } from "@magemetrics/ai/react";
 
 <ChatLayoutProvider>
   <div className="chat-container">
-    <ChatMessages flowId={flowId} />
-    <ChatInput flowId={flowId} />
+    <Chat flowId={flowId} />
   </div>
 </ChatLayoutProvider>;
 ```
