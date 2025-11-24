@@ -11,7 +11,7 @@ export const CustomDataTableComponent = (props: DataReportMessageProps) => {
   return (
     <div
       style={{
-        height: props.isOpened ? "400px" : "225px",
+        height: "400px",
         overflow: "hidden",
         display: "flex",
       }}

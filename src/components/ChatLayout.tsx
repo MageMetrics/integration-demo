@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChatLayoutProvider, Chat } from "@magemetrics/ai/react";
+import { Chat } from "@magemetrics/ai/react";
 import { RecentFlowsDisplay } from "./FlowComponents";
 
 // =============================================================================
@@ -24,21 +24,19 @@ export const BuildYourOwnChatLayout = () => {
       </div>
 
       <div className="flex flex-1 overflow-hidden">
-        <ChatLayoutProvider>
-          <div className="flex flex-1 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-            <div className="flex flex-col flex-1 min-h-0 w-full">
-              <div className="flex-1 min-h-0">
-                {flowId ? (
-                  <Chat flowId={flowId} />
-                ) : (
-                  <div className="flex h-full text-center text-gray-500 items-center justify-center">
-                    Select a flow to start chatting
-                  </div>
-                )}
-              </div>
+        <div className="flex flex-1 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+          <div className="flex flex-col flex-1 min-h-0 w-full">
+            <div className="flex-1 min-h-0">
+              {flowId ? (
+                <Chat flowId={flowId} />
+              ) : (
+                <div className="flex h-full text-center text-gray-500 items-center justify-center">
+                  Select a flow to start chatting
+                </div>
+              )}
             </div>
           </div>
-        </ChatLayoutProvider>
+        </div>
       </div>
     </div>
   );

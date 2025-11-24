@@ -47,7 +47,6 @@ export const DashboardDemo = () => {
           </h3>
           <Visualization
             visualizationId={parseInt(visualizationId)}
-            isFullWidth={true}
             withTitle={true}
           />
         </div>

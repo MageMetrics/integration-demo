@@ -59,7 +59,7 @@ export const TestContent = () => {
       externalJwt={user.session.access_token}
       apiKey="mm-magemetrics-test"
       apiUrl={API_URL}
-      experimental_components={customComponents}
+      components={customComponents}
     >
       <div className="flex flex-col h-full w-full">
         <JwtConfiguration />
