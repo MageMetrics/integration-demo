@@ -1,5 +1,6 @@
 import {
   DataTable,
+  DownloadDataReportButton,
   type Components,
   type DataReportMessageProps,
 } from "@magemetrics/ai/react";
@@ -41,5 +42,9 @@ export const customComponents: Components = {
   },
   dataReportTable: (props) => {
     return <CustomDataTableComponent {...props} />;
+  },
+  // avatar: <img src="https://example.com/image.jpg" alt="Avatar" />,
+  dataReportMessageActions: (props) => {
+    return <DownloadDataReportButton reportId={props.report.id} />;
   },
 };
