@@ -4,8 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
 import "./index.css";
 
-// Import fonts and MageMetrics styles
-import "@fontsource/roboto";
+// Import MageMetrics fonts and styles
 import "@magemetrics/ai/fonts.css";
 import "@magemetrics/ai/styles.css";
 

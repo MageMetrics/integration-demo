@@ -1,5 +1,40 @@
 import { useState } from "react";
-import { Visualization, DataReport, DomWrapper } from "@magemetrics/ai/react";
+import {
+  Visualization,
+  StandaloneDataTable,
+  useReport,
+} from "@magemetrics/ai/react";
+
+const ReportDisplay = ({ reportId }: { reportId: number }) => {
+  const { data: report, isLoading, error } = useReport(reportId);
+
+  if (isLoading) {
+    return (
+      <div className="bg-white p-6 rounded-lg border border-gray-200 text-center text-gray-500">
+        Loading report...
+      </div>
+    );
+  }
+
+  if (error || !report) {
+    return (
+      <div className="bg-white p-6 rounded-lg border border-red-200 text-center text-red-600">
+        {error ? `Failed to load report: ${error.message}` : "Report not found"}
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white p-6 rounded-lg border border-gray-200">
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        StandaloneDataTable Component Demo
+      </h3>
+      <div style={{ height: "400px", overflow: "hidden" }}>
+        <StandaloneDataTable report={report} />
+      </div>
+    </div>
+  );
+};
 
 export const DashboardDemo = () => {
   const [activeView, setActiveView] = useState<"visualization" | "report">(
@@ -109,17 +144,8 @@ export const DashboardDemo = () => {
         </div>
       </div>
 
-      {/* DataReport Component */}
-      {reportId && (
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            DataReport Component Demo
-          </h3>
-          <DomWrapper>
-            <DataReport reportId={parseInt(reportId)} />
-          </DomWrapper>
-        </div>
-      )}
+      {/* StandaloneDataTable Component */}
+      {reportId && <ReportDisplay reportId={parseInt(reportId)} />}
 
       {!reportId && (
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
@@ -135,13 +161,13 @@ export const DashboardDemo = () => {
 
       <div className="bg-gray-50 p-4 rounded-lg">
         <h4 className="font-medium text-gray-800 mb-2">
-          About the DataReport component:
+          About the StandaloneDataTable component:
         </h4>
         <p className="text-sm text-gray-600">
-          The DataReport component from @magemetrics/ai/react displays
+          The StandaloneDataTable component from @magemetrics/ai/react displays
           structured reports based on pre-defined report configurations in your
-          MageMetrics dashboard. It requires a report ID that corresponds to an
-          existing report template.
+          MageMetrics dashboard. It requires a report object fetched via the
+          useReport hook.
         </p>
       </div>
     </div>
