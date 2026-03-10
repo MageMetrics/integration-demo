@@ -1,14 +1,14 @@
 import {
   DataTable,
-  DownloadDataReportButton,
+  useDownloadReportData,
   type Components,
-  type DataReportMessageProps,
+  type Report,
 } from "@magemetrics/ai/react";
 
 // =============================================================================
 // CUSTOM COMPONENTS FOR DATA VISUALIZATION
 // =============================================================================
-export const CustomDataTableComponent = (props: DataReportMessageProps) => {
+export const CustomDataTableComponent = (_props: { report: Report }) => {
   return (
     <div
       style={{
@@ -17,8 +17,20 @@ export const CustomDataTableComponent = (props: DataReportMessageProps) => {
         display: "flex",
       }}
     >
-      <DataTable {...props} />
+      <DataTable />
     </div>
+  );
+};
+
+const DownloadReportButton = ({ reportId }: { reportId: number }) => {
+  const { download } = useDownloadReportData();
+  return (
+    <button
+      onClick={() => download({ reportId })}
+      className="text-sm text-blue-600 hover:text-blue-800 underline"
+    >
+      Download CSV
+    </button>
   );
 };
 
@@ -45,6 +57,6 @@ export const customComponents: Components = {
   },
   // avatar: <img src="https://example.com/image.jpg" alt="Avatar" />,
   dataReportMessageActions: (props) => {
-    return <DownloadDataReportButton reportId={props.report.id} />;
+    return <DownloadReportButton reportId={props.report.id} />;
   },
 };
