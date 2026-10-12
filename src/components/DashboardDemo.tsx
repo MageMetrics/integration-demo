@@ -5,7 +5,7 @@ import {
   useReport,
 } from "@magemetrics/ai/react";
 
-const ReportDisplay = ({ reportId }: { reportId: number }) => {
+const ReportDisplay = ({ reportId }: { reportId: string }) => {
   const { data: report, isLoading, error } = useReport(reportId);
 
   if (isLoading) {
@@ -29,8 +29,8 @@ const ReportDisplay = ({ reportId }: { reportId: number }) => {
       <h3 className="text-lg font-semibold text-gray-900 mb-4">
         StandaloneDataTable Component Demo
       </h3>
-      <div style={{ height: "400px", overflow: "hidden" }}>
-        <StandaloneDataTable report={report} />
+      <div style={{ height: "400px", overflow: "hidden", display: "flex" }}>
+        <StandaloneDataTable key={report.uuid} report={report} />
       </div>
     </div>
   );
@@ -60,10 +60,10 @@ export const DashboardDemo = () => {
             </label>
             <input
               id="vis-id"
-              type="number"
+              type="text"
               value={visualizationId}
               onChange={(e) => setVisualizationId(e.target.value)}
-              placeholder="Enter visualization ID (e.g., 123)"
+              placeholder="Enter visualization ID"
               className="w-full px-3 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
@@ -81,7 +81,7 @@ export const DashboardDemo = () => {
             Visualization Component Demo
           </h3>
           <Visualization
-            visualizationId={parseInt(visualizationId)}
+            visualizationId={visualizationId}
             withTitle={true}
           />
         </div>
@@ -130,10 +130,10 @@ export const DashboardDemo = () => {
             </label>
             <input
               id="report-id"
-              type="number"
+              type="text"
               value={reportId}
               onChange={(e) => setReportId(e.target.value)}
-              placeholder="Enter report ID (e.g., 456)"
+              placeholder="Enter report ID"
               className="w-full px-3 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
             />
           </div>
@@ -145,7 +145,7 @@ export const DashboardDemo = () => {
       </div>
 
       {/* StandaloneDataTable Component */}
-      {reportId && <ReportDisplay reportId={parseInt(reportId)} />}
+      {reportId && <ReportDisplay reportId={reportId} />}
 
       {!reportId && (
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
