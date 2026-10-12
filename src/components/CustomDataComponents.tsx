@@ -2,13 +2,12 @@ import {
   DataTable,
   useDownloadReportData,
   type Components,
-  type Report,
 } from "@magemetrics/ai/react";
 
 // =============================================================================
 // CUSTOM COMPONENTS FOR DATA VISUALIZATION
 // =============================================================================
-export const CustomDataTableComponent = (_props: { report: Report }) => {
+export const CustomDataTableComponent = () => {
   return (
     <div
       style={{
@@ -22,15 +21,21 @@ export const CustomDataTableComponent = (_props: { report: Report }) => {
   );
 };
 
-const DownloadReportButton = ({ reportId }: { reportId: number }) => {
-  const { download } = useDownloadReportData();
+const DownloadReportButton = ({ reportId }: { reportId: string }) => {
+  const { download, isPending, isError } = useDownloadReportData();
+
   return (
-    <button
-      onClick={() => download({ reportId })}
-      className="text-sm text-blue-600 hover:text-blue-800 underline"
-    >
-      Download CSV
-    </button>
+    <div>
+      <button
+        type="button"
+        onClick={() => download({ reportId })}
+        disabled={isPending}
+        className="text-blue-600 hover:text-blue-800 disabled:opacity-50"
+      >
+        {isPending ? "Downloading…" : "Download CSV"}
+      </button>
+      {isError && <p role="alert">Download failed. Please try again.</p>}
+    </div>
   );
 };
 
@@ -39,11 +44,12 @@ export const customComponents: Components = {
   dataTableCells: {
     empty: () => "N/A",
     renderTypes: {
-      url: (props: unknown) => {
-        if (typeof props !== "string") return null;
+      url: ({ formattedValue }) => {
+        const url = formattedValue?.display;
+        if (!url || !/^https?:\/\//i.test(url)) return url ?? null;
         return (
           <a
-            href={props}
+            href={url}
             className="text-blue-600 hover:text-blue-800 underline"
           >
             View Link
@@ -52,11 +58,11 @@ export const customComponents: Components = {
       },
     },
   },
-  dataReportTable: (props) => {
-    return <CustomDataTableComponent {...props} />;
+  dataReportTable: () => {
+    return <CustomDataTableComponent />;
   },
   // avatar: <img src="https://example.com/image.jpg" alt="Avatar" />,
   dataReportMessageActions: (props) => {
-    return <DownloadReportButton reportId={props.report.id} />;
+    return <DownloadReportButton reportId={props.report.uuid} />;
   },
 };

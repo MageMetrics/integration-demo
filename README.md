@@ -107,31 +107,44 @@ import { StandaloneConversationModal } from "@magemetrics/ai/react";
 ### Building Custom Chat Layout
 
 ```tsx
-import { ChatLayoutProvider, Chat } from "@magemetrics/ai/react";
+import { Chat } from "@magemetrics/ai/react";
 
-<ChatLayoutProvider>
-  <div className="chat-container">
-    <Chat flowId={flowId} />
-  </div>
-</ChatLayoutProvider>;
+<div className="chat-container">
+  <Chat flowId={flowId} />
+</div>;
 ```
 
 ### Using Dashboard Components
 
 ```tsx
-import { Visualization, DataReport, DomWrapper } from "@magemetrics/ai/react";
+import {
+  Visualization,
+  StandaloneDataTable,
+  useReport,
+  DomWrapper,
+} from "@magemetrics/ai/react";
 
 // Display a visualization
 <Visualization
-  visualizationId={123}
-  isFullWidth={true}
+  visualizationId="your-visualization-id"
   withTitle={true}
 />
 
 // Display a data report
-<DomWrapper>
-  <DataReport reportId={456} />
-</DomWrapper>
+function ReportPreview({ reportId }: { reportId: string }) {
+  const { data: report, isLoading, isError } = useReport(reportId);
+  if (isLoading) return <p>Loading report…</p>;
+  if (isError) return <p>Unable to load this report.</p>;
+  if (!report) return <p>No report found.</p>;
+
+  return (
+    <DomWrapper>
+      <div style={{ height: 400, display: "flex", overflow: "hidden" }}>
+        <StandaloneDataTable key={report.uuid} report={report} />
+      </div>
+    </DomWrapper>
+  );
+}
 ```
 
 ### Triggering Predefined Flows
@@ -158,17 +171,18 @@ createFlow({
 The demo includes custom component examples for data visualization:
 
 ```typescript
-import { Components, DataTable } from "@magemetrics/ai/react";
+import { type Components, DataTable } from "@magemetrics/ai/react";
 
 const customComponents: Components = {
   dataTableCells: {
     empty: () => "N/A",
     renderTypes: {
-      url: (props: unknown) => {
-        if (typeof props !== "string") return null;
+      url: ({ formattedValue }) => {
+        const url = formattedValue?.display;
+        if (!url || !/^https?:\/\//i.test(url)) return url ?? null;
         return (
           <a
-            href={props}
+            href={url}
             className="text-blue-600 hover:text-blue-800 underline"
           >
             View Link
@@ -177,8 +191,12 @@ const customComponents: Components = {
       },
     },
   },
-  dataReportTable: (props) => {
-    return <CustomDataTableComponent {...props} />;
+  dataReportTable: () => {
+    return (
+      <div style={{ height: 400, display: "flex", overflow: "hidden" }}>
+        <DataTable />
+      </div>
+    );
   },
 };
 ```

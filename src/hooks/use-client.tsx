@@ -2,8 +2,7 @@ import {
   createContext,
   useContext,
   useState,
-  useEffect,
-  ReactNode,
+  type ReactNode,
 } from "react";
 
 interface User {
@@ -20,7 +19,10 @@ interface ClientContextType {
 const ClientContext = createContext<ClientContextType | undefined>(undefined);
 
 export const ClientProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User>({ session: null });
+  const [user, setUser] = useState<User>(() => {
+    const savedJwt = localStorage.getItem("magemetrics_jwt");
+    return { session: savedJwt ? { access_token: savedJwt } : null };
+  });
 
   const setExternalJwt = (jwt: string) => {
     setUser({
@@ -29,14 +31,6 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
       },
     });
   };
-
-  // Check for JWT in localStorage on mount
-  useEffect(() => {
-    const savedJwt = localStorage.getItem("magemetrics_jwt");
-    if (savedJwt) {
-      setExternalJwt(savedJwt);
-    }
-  }, []);
 
   return (
     <ClientContext.Provider value={{ user, setExternalJwt }}>
